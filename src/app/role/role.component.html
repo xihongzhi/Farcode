@@ -1,0 +1,114 @@
+<div class="page-content-wrapper">
+  <!-- BEGIN CONTENT BODY -->
+  <div class="page-content">
+        <div class="box">
+
+      <!-- BEGIN PAGE HEADER-->
+      <div class="page-bar">
+          <ul class="page-breadcrumb">
+              <li>
+                  <i class="icon-home"></i> 角色管理
+              </li>
+          </ul>
+      </div>
+      <div class="overlay" *ngIf="loading">
+            <i class="fa fa-refresh fa-spin"></i>
+          </div>
+      <!-- END PAGE HEADER-->
+      <div class="row">
+          <div class="col-md-12">
+              <!-- BEGIN SAMPLE TABLE PORTLET-->
+              <div class="portlet light ">
+                  <div class="portlet-title">
+                      <div class="row">
+                          <div class="col-md-6">
+                              <div class="form-group">
+                                  <label class="control-label">角色名称</label>
+                                  <input id="name" type="text" [(ngModel)]="name"  placeholder="角色名称" class="form-control">
+                              </div>
+                          </div>
+                          <div class="col-md-6">
+                              <div class="form-group">
+                                  <label class="control-label">角色描述</label>
+                                  <input id="description" type="text" [(ngModel)]="description"  placeholder="角色描述" class="form-control">
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="portlet-body">
+                      <div class="table-toolbar">
+                          <div class="row">
+                              <div class="col-md-12 text-center">
+                                  <div class="btn-group">
+                                      <button id="btn_search" class="btn blue" (click)="btnSearch(null);">
+                                          查询
+                                          <i class="fa fa-search"></i>
+                                      </button>
+                                      <button class="btn green" (click)="btnAdd();">
+                                          创建
+                                          <i class="fa fa-plus"></i>
+                                      </button>
+                                      <!-- <button id="btn_edt" class="btn yellow" (click)="btnEdit();">
+                                          编辑
+                                          <i class="fa fa-edit"></i>
+                                      </button>
+                                      <button id="btn_del" class="btn red" (click)="btnDel();">
+                                          删除
+                                          <i class="fa fa-remove"></i>
+                                      </button> -->
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="dataTables_wrapper no-footer" [hidden]="isHidden">
+                          <!-- <div class="row">
+                              <div class="col-md-6">
+                                  <div class="dataTables_length" id="table_length">
+                                      <label>每页显示 <select name="sample_editable_1_length" aria-controls="sample_editable_1" class="form-control input-sm input-xsmall input-inline"><option value="5">5</option><option value="15">15</option><option value="20">20</option><option value="-1">All</option></select> 记录</label>
+                                  </div>
+                              </div>
+                          </div> -->
+                          <table id="product_list" class="table table-hover">
+                              <thead>
+                                  <tr>
+                                        <!-- <th>
+                                            <input type="checkbox" name="" [(ngModel)]="selectAll" (click)="all(selectAll)" />
+                                        </th> -->
+                                       <th class="col-md-1"> 序号 </th>
+                                      <th> 角色名称 </th>
+                                      <th> 角色描述 </th>
+                                      <th> 操作 </th>
+                                  </tr>
+                              </thead>
+                              <tbody id="list">
+                                    <tr *ngFor="let item of response;let i=index;">
+                                            <!-- <input type="checkbox" name="" [(ngModel)]="item.checkStatus" [(checked)]="selectAll" /> -->
+                                            <td>{{item.id}}</td>
+                                            <td>{{item.name}}</td>
+                                            <td>{{item.description}}</td>
+                                            <td> <button id="btn_edt" class="btn yellow" (click)="btnEdit(item);">
+                                                    编辑
+                                                    <i class="fa fa-edit"></i>
+                                                </button>
+                                                <button id="btn_del" class="btn red" (click)="btnDel(item);">
+                                                    删除
+                                                    <i class="fa fa-remove"></i>
+                                                </button>
+                                            </td>
+                                          </tr>
+                              </tbody>
+                          </table> 
+                      </div>
+                      <div class="col-lg-12 col-md-12" *ngIf="response.length>0">
+                            <app-pagination [PageIndex]="_pageIndex" [PageSize]="_pageSize" [PageCount]="GetPageCount()" [Total]="_total" (dataList)="btnSearch($event);"></app-pagination>
+                          </div>
+                  </div>
+              </div>
+              <!-- END SAMPLE TABLE PORTLET-->
+          </div>
+      </div>
+      <!-- END CONTENT BODY -->
+  </div>
+  <!-- END CONTENT -->
+</div>
+</div>

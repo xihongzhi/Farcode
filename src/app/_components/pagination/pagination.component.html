@@ -1,0 +1,16 @@
+<div class="col col-sm-5">
+    <div class="dataTables_info">总条数 {{Total}} 每页条数 {{PageSize}} 当前页 {{PageIndex}}</div>
+</div>
+<div class="col col-sm-7">
+    <div class="dataTables_paginate paging_simple_numbers">
+        <ul class="pagination">
+            <li class="paginate_button previous"><a href="JavaScript:void(0);" (click)="btnHome();">首页</a></li>
+            <li class="paginate_button previous"><a href="JavaScript:void(0);" (click)="btnPrev();">上一页</a></li>
+
+            <li class="paginate_button" *ngFor="let page of GetMinPageCount()" [class.active]="page==PageIndex" title="{{page}}"><a href="JavaScript:void(0);" (click)="btnPage(page);">{{page}}</a></li>
+
+            <li class="paginate_button next" id="example2_next"><a href="JavaScript:void(0);" (click)="btnNext();">下一页</a></li>
+            <li class="paginate_button next" id="example2_next"><a href="JavaScript:void(0);" (click)="btnLast();">尾页</a></li>
+        </ul>
+    </div>
+</div>

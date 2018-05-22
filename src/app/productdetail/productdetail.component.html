@@ -1,0 +1,607 @@
+<div class="page-content-wrapper">
+  <div class="page-content">
+    <div class="box">
+      <div class="page-bar">
+        <ul class="page-breadcrumb">
+          <li>
+            <i class="icon-home"></i> 产品信息
+          </li>
+        </ul>
+      </div>
+      <div class="overlay" *ngIf="loading">
+        <i class="fa fa-refresh fa-spin"></i>
+      </div>
+      <div class="row">
+        <div id="content" class="portlet-body">
+          <div class="col-md-12">
+            <ul class="nav nav-tabs" style="margin-bottom: 0">
+              <li id="t1" class="active">
+                <a href="#tab_2_1" data-toggle="tab" aria-expanded="true"> 产品信息 </a>
+              </li>
+              <li id="t2" class="">
+                <a href="#tab_2_2" data-toggle="tab" aria-expanded="false"> 规则信息 </a>
+              </li>
+              <li id="t3" class="">
+                <a href="#tab_2_3" data-toggle="tab" aria-expanded="false"> 运价信息 </a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div class="portlet light tab-pane fade active in" id="tab_2_1">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="portlet light ">
+                      <div class="portlet-body form">
+                        <div class="mt-repeater form-horizontal">
+                          <div class="mt-repeater-item">
+                            <div class="mt-repeater-input">
+                              <label class="control-label">产品名称
+                                <span class="color-red">*</span>
+                              </label>
+                              <br>
+                              <input id="title" type="text" name="name" [(ngModel)]="data.name" class="form-control" value="">
+                            </div>
+                            <div class="mt-repeater-input">
+                              <label class="control-label">产品类型
+                                <span class="color-red">*</span>
+                              </label>
+                              <select id="type" class="form-control" [(ngModel)]="data.typeV">
+                                <option *ngFor="let item of typeList " [value]="item.id">{{item.text}}</option>
+                              </select>
+                            </div>
+                            <div class="mt-repeater-input">
+                              <label class="control-label">产品编号
+                                <span class="color-red">*</span>
+                              </label>
+                              <br>
+                              <input id="code" type="text" name="num" [(ngModel)]="data.num" class="form-control" value="">
+                            </div>
+                            <div class="mt-repeater-input">
+                              <label class="control-label">客公里收入小于0.35元</label>
+                              <br>
+                              <label class="mt-checkbox">
+                                <input id="isCheck" type="checkbox" name="isgt" [(ngModel)]="data.kmIncomeFlag" checked />是
+                                <span></span>
+                              </label>
+                            </div>
+                          </div>
+                          <div class="mt-repeater-item">
+                            <div class="mt-repeater-input">
+                              <label class="control-label">销售范围
+                                <span class="color-red">*</span>
+                              </label>
+                              <select id="sellScope" class="form-control" [(ngModel)]="data.sellScopeV">
+                                <option *ngFor="let item of rangeList " [value]="item.id">{{item.text}}</option>
+                              </select>
+                            </div>
+                            <div class="mt-repeater-input">
+                              <label class="control-label">生效日期
+                                <span class="color-red">*</span>
+                              </label>
+                              <br>
+                              <div class="input-group">
+                                <input type="text" class="form-control" placeholder="生效日期" name="validDate" size="16" appDatePicker [(ngModel)]="data.validDate"
+                                />
+                              </div>
+                            </div>
+                            <div class="mt-repeater-input">
+                              <label class="control-label">失效日期
+                                <span class="color-red">*</span>
+                              </label>
+                              <br>
+                              <div class="input-group">
+                                <input type="text" class="form-control" placeholder="失效日期" name="invalidDate" size="16" appDatePicker [(ngModel)]="data.invalidDate"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="portlet light">
+                      <div id="begin" class="portlet-body form">
+                        <div class="form-group mt-repeater">
+                          <div class="group">
+                            <div class="mt-repeater-item" *ngFor="let item of data.tripDateLimits;let i=index;">
+                              <div class="mt-repeater-input">
+                                <label class="control-label">旅行开始日期</label>
+                                <br>
+                                <div class="input-group">
+                                  <input type="text" class="form-control" placeholder="开始日期" name="exceptStartTime" size="16" appDatePicker [(ngModel)]="item.beginDate"
+                                  />
+                                </div>
+                              </div>
+                              <div class="mt-repeater-input">
+                                <label class="control-label">结束日期</label>
+                                <br>
+                                <div class="input-group">
+                                  <input type="text" class="form-control" placeholder="结束日期" name="exceptEndTime" size="16" appDatePicker [(ngModel)]="item.endDate"
+                                  />
+                                </div>
+                              </div>
+                              <!-- <div class="mt-repeater-input" *ngIf="i>0">
+                                      <label class="control-label">&nbsp;</label>
+                                      <br>
+                                      <button class="btn red btn_del" type="button" (click)="btnRemoveTrip(i);">删除</button>
+                                  </div> -->
+                            </div>
+                            <!-- <ng-template #exceptContainer></ng-template> -->
+                          </div>
+                          <!-- <a href="javascript:;" class="btn btn-success mt-repeater-add" (click)="btnAddTrip();">
+                            <i class="fa fa-plus"></i> 添加一行
+                          </a> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="portlet light">
+                      <div class="portlet-body form">
+                        <div id="except" class="form-group mt-repeater">
+                          <div class="group">
+                            <div class="mt-repeater-item" *ngFor="let item of data.exceptDateLimits;let i=index;">
+                              <div class="mt-repeater-input">
+                                <label class="control-label">除外开始日期</label>
+                                <br>
+                                <div class="input-group">
+                                  <input type="text" class="form-control" placeholder="开始日期" name="exceptStartTime" size="16" appDatePicker [(ngModel)]="item.beginDate"
+                                  />
+                                </div>
+                              </div>
+                              <div class="mt-repeater-input">
+                                <label class="control-label">结束日期</label>
+                                <br>
+                                <div class="input-group">
+                                  <input type="text" class="form-control" placeholder="结束日期" name="exceptEndTime" size="16" appDatePicker [(ngModel)]="item.endDate"
+                                  />
+                                </div>
+                              </div>
+                              <!-- <div class="mt-repeater-input" *ngIf="i>0">
+                                  <label class="control-label">&nbsp;</label>
+                                  <br>
+                                  <button class="btn red btn_del" type="button" (click)="btnRemoveExcept(i);">删除</button>
+                              </div> -->
+                            </div>
+                            <!-- <ng-template #exceptContainer></ng-template> -->
+                          </div>
+                          <!-- <a href="javascript:;" class="btn btn-success mt-repeater-add" (click)="btnAddexcept();">
+                            <i class="fa fa-plus"></i> 添加一行
+                          </a> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-9">
+                    <div class="portlet light">
+                      <div class="portlet-body form">
+                        <div id="od" class="form-group mt-repeater">
+
+                          <div class="group">
+                            <div class="mt-repeater-item" *ngFor="let item of data.sellDateLimits;let i=index;">
+                              <div class="mt-repeater-input">
+                                <label class="control-label">销售开始日期</label>
+                                <br>
+                                <div class="input-group">
+                                  <input type="text" class="form-control" placeholder="开始日期" name="exceptStartTime" size="16" appDatePicker [(ngModel)]="item.beginDate"
+                                  />
+                                </div>
+                              </div>
+                              <div class="mt-repeater-input">
+                                <label class="control-label">结束日期</label>
+                                <br>
+                                <div class="input-group">
+                                  <input type="text" class="form-control" placeholder="结束日期" name="exceptEndTime" size="16" appDatePicker [(ngModel)]="item.endDate"
+                                  />
+                                </div>
+                              </div>
+                              <!-- <div class="mt-repeater-input" *ngIf="i>0">
+                                    <label class="control-label">&nbsp;</label>
+                                    <br>
+                                    <button class="btn red btn_del" type="button" (click)="btnRemoveSell(i);">删除</button>
+                                </div> -->
+                            </div>
+                            <!-- <ng-template #exceptContainer></ng-template> -->
+                          </div>
+                          <!-- <a href="javascript:;" class="btn btn-success mt-repeater-add" (click)="btnAddSell();">
+                            <i class="fa fa-plus"></i> 添加一行
+                          </a> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="portlet light ">
+                      <div class="portlet-title">
+                        <div class="caption font-red-sunglo">
+                          <i class="icon-settings font-red-sunglo"></i>
+                          <span class="caption-subject bold uppercase"> 备注</span>
+                        </div>
+                      </div>
+                      <div class="portlet-body form">
+                        <div role="form" class="form-horizontal form-bordered">
+                          <div class="form-body">
+                            <div class="form-group last">
+                              <label class="control-label col-md-2">市场分析</label>
+                              <div class="col-md-10">
+                                <textarea id="marketAnalysis" name="content" [(ngModel)]="productMoreInfoVO.marketAnalysis" class="col-md-12" rows="10"></textarea>
+                              </div>
+                            </div>
+                            <div class="form-group last">
+                              <label class="control-label col-md-2">竞争情况</label>
+                              <div class="col-md-10">
+                                <textarea id="competition" name="content" [(ngModel)]="productMoreInfoVO.competition" class="col-md-12" rows="10"></textarea>
+                              </div>
+                            </div>
+                            <div class="form-group last">
+                              <label class="control-label col-md-2">前期销售情况</label>
+                              <div class="col-md-10">
+                                <textarea id="preSale" name="content" [(ngModel)]="productMoreInfoVO.preSale" class="col-md-12" rows="10"></textarea>
+                              </div>
+                            </div>
+                            <div class="form-group last">
+                              <label class="control-label col-md-2">调整原因及计划</label>
+                              <div class="col-md-10">
+                                <textarea id="adjustCausePlan" name="content" [(ngModel)]="productMoreInfoVO.adjustCausePlan" class="col-md-12" rows="10"></textarea>
+                              </div>
+                            </div>
+                            <div class="form-group last">
+                              <label class="control-label col-md-2">销售预期</label>
+                              <div class="col-md-10">
+                                <textarea id="saleExpectation" name="content" [(ngModel)]="productMoreInfoVO.saleExpectation" class="col-md-12" rows="10"></textarea>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-actions">
+                            <a class="btn default" (click)="btnGoBack();">返回</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="portlet light tab-pane fade" id="tab_2_2">
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="portlet-title">
+                      <span class="caption-subject bold uppercase"> CAT4：航班限制</span>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="table-scrollable">
+                        <table class="table table-hover table-bordered table-striped order-column" id="product_list">
+                          <thead>
+                            <tr>
+                              <th>模板</th>
+                              <th>表号</th>
+                              <th>地点1</th>
+                              <th>地点2</th>
+                              <th>是否允许</th>
+                              <th>航班号1</th>
+                              <th>关系</th>
+                              <th>航班号2</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let item of response1;let i=index;">
+
+                              <td>{{item.cat.id}}</td>
+                              <td></td>
+                              <td>{{item.cat.scopeBeginValue}}</td>
+                              <td>{{item.cat.scopeEndValue}}</td>
+                              <td>{{ConvertaAllow(item.cat.allowFlag)}}</td>
+                              <td>{{item.cat.flightNo}}</td>
+                              <td>{{ConvertCondition(item.cat.flightConditionType)}}</td>
+                              <td>{{item.cat.flightNo1}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="portlet-title">
+                      <span class="caption-subject bold uppercase">CAT5：提前订座/出票设置</span>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="table-scrollable">
+                        <table class="table table-hover table-bordered table-striped order-column" id="product_list">
+                          <thead>
+                            <tr>
+                              <th>模板</th>
+                              <th>表号</th>
+                              <th>是否允许OPEN</th>
+                              <th>提前购票期</th>
+                              <th>单位</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let item of response2;let i=index;">
+                              <td>{{item.cat.id}}</td>
+                              <td></td>
+                              <td>{{ConvertType(item.cat.returnTripAllowOpen)}}</td>
+                              <td>{{item.cat.advanceTicketTime}}</td>
+                              <td>{{ConvertDW(item.cat.advanceTicketTimeunit)}}</td>
+                            </tr>
+
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="portlet-title">
+                      <span class="caption-subject bold uppercase">CAT6：最小停留</span>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="table-scrollable">
+                        <table class="table table-hover table-bordered table-striped order-column" id="product_list">
+                          <thead>
+                            <tr>
+                              <th>模板</th>
+                              <th>表号</th>
+                              <th>最小停留期</th>
+                              <th>单位</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let item of response3;let i=index;">
+                              <td>{{item.cat.id}}</td>
+                              <td></td>
+                              <td>{{item.cat.stayTime}}</td>
+                              <td>{{ConvertDW(item.cat.stayTimeUnit)}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="portlet-title">
+                      <span class="caption-subject bold uppercase"> CAT7：最长停留</span>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="table-scrollable">
+                        <table class="table table-hover table-bordered table-striped order-column" id="product_list">
+                          <thead>
+                            <tr>
+                              <th>模板</th>
+                              <th>表号</th>
+                              <th>最大停留期</th>
+                              <th>单位</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let item of response4;let i=index;">
+
+                              <td>{{item.cat.id}}</td>
+                              <td></td>
+                              <td>{{item.cat.stayTime}}</td>
+                              <td>{{ConvertDW(item.cat.stayTimeUnit)}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="portlet-title">
+                      <span class="caption-subject bold uppercase"> CAT10：运价组合</span>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="table-scrollable">
+                        <table class="table table-hover table-bordered table-striped order-column" id="product_list">
+                          <thead>
+                            <tr>
+                              <th>模板</th>
+                              <th>101表号</th>
+                              <th>开口程</th>
+                              <th>102表号</th>
+                              <th>1/2RT</th>
+                              <th>103表号</th>
+                              <th>环程</th>
+                              <th>104表号</th>
+                              <th>END-ON-END</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let item of response5;let i=index;">
+                              <td>{{item.cat.id}}</td>
+                              <td></td>
+                              <td>{{ConvertType(item.cat.openingsFlag)}}</td>
+                              <td></td>
+                              <td>{{ConvertType(item.cat.halfRtGroupFlag)}}</td>
+                              <td></td>
+                              <td>{{ConvertType(item.cat.addOnGroupFlag)}}</td>
+                              <td></td>
+                              <td>{{ConvertType(item.cat.endOnEndFlag)}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="portlet-title">
+                      <span class="caption-subject bold uppercase"> CAT16：变更退票费</span>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="table-scrollable">
+                        <table class="table table-hover table-bordered table-striped order-column" id="product_list">
+                          <thead>
+                            <tr>
+                              <th>模板</th>
+                              <th>表号</th>
+                              <th>允许改期</th>
+                              <th>改期费</th>
+                              <th>货币单位</th>
+                              <th>允许退票</th>
+                              <th>退票费</th>
+                              <th>货币单位</th>
+                              <th>NOSHOW</th>
+                              <th>NO SHOW费</th>
+                              <th>货币单位</th>
+                              <th>NOTE</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let item of response6;let i=index;">
+
+                              <td>{{item.cat.id}}</td>
+                              <td></td>
+                              <td>{{ConvertaAllow(item.cat.changeAllowFlag)}}</td>
+                              <td>{{item.cat.changeFee}}</td>
+                              <td>{{item.cat.changeFeeMoneyType}}</td>
+                              <td>{{ConvertaAllow(item.cat.returnAllowFlag)}}</td>
+                              <td>{{item.cat.returnFee}}</td>
+                              <td>{{item.cat.returnFeeMoneyType}}</td>
+                              <th>{{ConvertaAllow(item.cat.noShowAllowFlag)}}</th>
+                              <td>{{item.cat.noShowFee}}</td>
+                              <td>{{item.cat.noShowFeeMoneyType}}</td>
+                              <td>{{item.cat.remark}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="portlet-title">
+                      <span class="caption-subject bold uppercase"> CAT18：客票签注</span>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="table-scrollable">
+                        <table class="table table-hover table-bordered table-striped order-column" id="product_list">
+                          <thead>
+                            <tr>
+                              <th>模板</th>
+                              <th>表号</th>
+                              <th>EI文本</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let item of response7;let i=index;">
+                              <td>{{item.cat.id}}</td>
+                              <td></td>
+                              <td>{{item.cat.remark}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="portlet-title">
+                      <span class="caption-subject bold uppercase"> CAT19：儿童婴儿折扣</span>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="table-scrollable">
+                        <table class="table table-hover table-bordered table-striped order-column" id="product_list">
+                          <thead>
+                            <tr>
+                              <th>模板</th>
+                              <th>表号</th>
+                              <th>儿童折扣</th>
+                              <th>婴儿折扣</th>
+                              <!-- <th>无陪儿童折扣</th> -->
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let item of response8;let i=index;">
+
+                              <td>{{item.cat.id}}</td>
+                              <td></td>
+                              <td>{{item.cat.discountAdultAccChildren}}</td>
+                              <td>{{item.cat.discountPedestalBaby}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-actions">
+                  <a class="btn default" (click)="btnGoBack();">返回</a>
+                </div>
+              </div>
+
+              <div class="portlet light tab-pane fade " id="tab_2_3">
+                <div class="portlet-body">
+                  <div class="table-scrollable">
+                    <table class="table table-hover table-bordered table-striped order-column" id="product_list">
+                      <thead>
+                        <tr>
+                          <th>序号</th>
+                          <!-- <th>变更类型</th> -->
+                          <th>始发</th>
+                          <th>到达</th>
+                          <th>OW/RT</th>
+                          <th>仓位</th>
+                          <th>Fare Class</th>
+                          <th>Fn</th>
+                          <th>路径</th>
+                          <th>货币</th>
+                          <th>价格</th>
+                          <th>VV</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of response;let i=index;">
+                          <td>{{item.id}}</td>
+                          <!-- <td>{{item.cxr}}</td> -->
+                          <td>{{item.departureCode}}</td>
+                          <td>{{item.arrivalCode}}</td>
+                          <td>{{ConvertOwrt(item.shuttleType)}}</td>
+                          <td>{{item.cabins}}</td>
+                          <td>{{item.fareClass}}</td>
+                          <td>{{item.footNote}}</td>
+                          <td>{{item.route}}</td>
+                          <td>{{item.priceFeeMoneyType}}</td>
+                          <td>{{item.priceFee}}</td>
+                          <td>{{ConvertType(item.vv)}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="col-lg-12 col-md-12" *ngIf="response.length>0">
+                    <app-pagination [PageIndex]="_pageIndex" [PageSize]="_pageSize" [PageCount]="GetPageCount()" [Total]="_total" (dataList)="btnSearch($event);"></app-pagination>
+                  </div>
+                </div>
+                <div class="form-actions">
+                  <a class="btn default" (click)="btnGoBack();">返回</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+<body class=" login">
+  <div class="login-box">
+    <!-- BEGIN LOGO -->
+    <div class="logo">
+      <h1>Farecode</h1>
+    </div>
+    <!-- END LOGO -->
+    <!-- BEGIN LOGIN -->
+    <div class="content">
+      <!-- BEGIN LOGIN FORM -->
+      <form class="login-form" action="index.html" method="get">
+        <h3 class="form-title font-green"> 国际运价管理系统</h3>
+        <div class="alert alert-danger display-hide">
+          <button class="close" data-close="alert"></button>
+          <span> 请填写用户名和密码 </span>
+        </div>
+        <div class="form-group">
+          <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+          <label class="control-label visible-ie8 visible-ie9">用户名</label>
+          <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="用户名" name="username"
+          />
+        </div>
+        <div class="form-group">
+          <label class="control-label visible-ie8 visible-ie9">密码</label>
+          <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="密码" name="pass"
+          />
+        </div>
+           <div class="form-group text-red" *ngIf="loading">
+                正在登录，请稍后...
+            </div>
+        <div class="form-group" style="text-align: center">
+          <button type="submit" style="min-width: 100px;border:none;border-radius:10px;" class="btn green uppercase" [disabled]="loading"  (click)="btnLogin();">登录</button>
+          <!-- <label class="rememberme check mt-checkbox mt-checkbox-outline">
+                    <input type="checkbox" name="remember" value="1">记住密码
+                    <span></span>
+                </label> -->
+          <!-- <a href="javascript:;" id="forget-password" class="forget-password">忘记密码?</a> -->
+        </div>
+      </form>
+      <!-- END LOGIN FORM -->
+    </div>
+  </div>
+  <div class="copyright"> Farecode Copyrighs 2015-2016 </div>
+</body>

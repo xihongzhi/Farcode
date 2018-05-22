@@ -1,0 +1,140 @@
+<div class="page-content-wrapper">
+  <!-- BEGIN CONTENT BODY -->
+  <div class="page-content">
+      <div class="box">
+    <!-- BEGIN PAGE HEADER-->
+    <div class="page-bar">
+      <ul class="page-breadcrumb">
+        <li>
+          <i class="icon-home"></i> 用户管理
+        </li>
+      </ul>
+    </div>
+    <div class="overlay" *ngIf="loading">
+        <i class="fa fa-refresh fa-spin"></i>
+      </div>
+    <!-- END PAGE HEADER-->
+    <div class="row">
+      <div class="col-md-12">
+        <!-- BEGIN SAMPLE TABLE PORTLET-->
+        <div class="portlet light ">
+          <div class="portlet-title">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="control-label">用户工号</label>
+                  <input id="search_id" type="text" [(ngModel)]="userno" placeholder="工号" class="form-control">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="control-label">用户姓名</label>
+                  <input id="name" type="text" [(ngModel)]="name" placeholder="姓名" class="form-control">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="control-label">登录名</label>
+                  <input id="username" type="text" [(ngModel)]="username" placeholder="登录名" class="form-control">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="control-label">角色</label>
+                  <select id="roleId" class="form-control" [(ngModel)]="roleId">
+                    <option *ngFor="let item of roleList " [value]="item.id">{{item.text}}</option>
+                  </select>
+               
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="control-label">状态</label>
+                  <select id="status" class="form-control" [(ngModel)]="status">
+                    <option *ngFor="let item of stateList " [value]="item.id">{{item.text}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="portlet-body">
+            <div class="table-toolbar">
+              <div class="row">
+                <div class="col-md-12 text-center">
+                  <div class="btn-group">
+                    <button id="btn_search" class="btn blue" (click)="btnSearch(null);">
+                      查询
+                      <i class="fa fa-search"></i>
+                    </button>
+                    <a  class="btn green"(click)="btnAdd();">
+                      新增
+                      <i class="fa fa-plus"></i>
+                    </a>
+                 
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="dataTables_wrapper no-footer" [hidden]="isHidden">
+              <div class="row">
+                <div class="col-md-6">
+                  <!-- <div class="dataTables_length" id="table_length">
+                    <label>每页显示
+                      <select name="sample_editable_1_length" aria-controls="sample_editable_1" class="form-control input-sm input-xsmall input-inline">
+                        <option value="5">5</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="-1">All</option>
+                      </select> 记录</label>
+                  </div> -->
+                </div>
+              </div>
+              <table id="product_list" class="table table-hover ">
+                <thead>
+                  <tr>
+                    <th class="col-md-1"> 编号 </th>
+                    <th> 登录名 </th>
+                    <th> 姓名 </th>
+                    <th> 角色 </th>
+                    <!-- <th> 数据角色 </th> -->
+                    <th> RTX名称 </th>
+                    <th> 电话 </th>
+                    <th> 手机 </th>
+                    <th> 状态 </th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody id="list">
+                  <tr *ngFor="let item of response;let i=index;">
+                    <td>{{item.id}}</td>
+                    <td>{{item.username}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{Convertrole(item.roleId)}}</td>
+                    <!-- <td>{{item.id}}</td> -->
+                    <td>{{item.rtx}}</td>
+                    <td>{{item.telephone}}</td>
+                    <td>{{item.mobile}}</td>
+                    <td>{{Convertstatus(item.status)}}</td>
+                    <td>
+                        <button  *ngIf="item.status==0" id="btn_open" class="btn yellow" (click)="btnOpen(item);"> 启用 </button>
+                        <button  *ngIf="item.status==1" id="btn_close" class="btn green" (click)="btnOpen(item);"> 停用 </button>
+                        <button id="btn_del" class="btn red" (click)="btnEdit(item);">编辑</button>
+                        <button id="btn_del" class="btn red" (click)="btnDel(item);">删除</button>
+                    </td> 
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-lg-12 col-md-12" *ngIf="response.length>0">
+                    <app-pagination [PageIndex]="_pageIndex" [PageSize]="_pageSize" [PageCount]="GetPageCount()" [Total]="_total" (dataList)="btnSearch($event);"></app-pagination>
+                  </div>
+          </div>
+        </div>
+        <!-- END SAMPLE TABLE PORTLET-->
+      </div>
+    </div>
+    <!-- END CONTENT BODY -->
+  </div>
+  <!-- END CONTENT -->
+</div>
+</div>

@@ -1,0 +1,14 @@
+﻿.logo {
+    color: #fff;
+    line-height: 65px;
+    font-size:20px;
+}
+.page-sidebar-closed .logo {
+    display:none;
+}
+.logout {
+margin-top: 20%;
+}
+.color-red {
+    color:#bb0000;
+}

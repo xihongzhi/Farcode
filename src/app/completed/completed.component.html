@@ -1,0 +1,130 @@
+<div class="page-content-wrapper">
+  <!-- BEGIN CONTENT BODY -->
+  <div class="page-content">
+      <!-- BEGIN PAGE HEADER-->
+      <div class="page-bar">
+          <ul class="page-breadcrumb">
+              <li>
+                  <i class="icon-home"></i> 已办任务
+              </li>
+          </ul>
+      </div>
+      <div class="overlay" *ngIf="loading">
+        <i class="fa fa-refresh fa-spin"></i>
+      </div>
+      <!-- END PAGE HEADER-->
+      <div class="row">
+          <div class="col-md-12">
+              <!-- BEGIN SAMPLE TABLE PORTLET-->
+              <div class="portlet light ">
+                  <div class="portlet-title">
+                      <div class="row">
+                          <div class="col-md-3">
+                              <div class="form-group">
+                                  <label class="control-label">产品名称</label>
+                                  <input id="search_name" type="text" placeholder="产品名称" class="form-control" [(ngModel)]="productName">
+                              </div>
+                          </div>
+                          <div class="col-md-3">
+                              <div class="form-group">
+                                  <label class="control-label">产品类型</label>
+                                  <select id="search_type" class="form-control" [(ngModel)]="type">
+                                        <option *ngFor="let item of typeList " [value]="item.id">{{item.text}}</option>
+                                </select>
+                              </div>
+                          </div>
+                         
+                          <div class="col-md-3">
+                              <div class="form-group">
+                                  <label class="control-label">本人操作</label>
+                                  <select id="search_oper" class="form-control" [(ngModel)]="approveStatus">
+                                        <option *ngFor="let item of operList " [value]="item.id">{{item.text}}</option>
+                                </select>
+                               
+                              </div>
+                          </div>
+                          <div class="col-lg-3 col-md-3">
+                                <div class="form-group">
+                                    <label>完成时间</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="开始时间" name="startTime" appDatePicker [(ngModel)]="startTime" />
+                                        <div class="input-group-addon">-</div>
+                                        <input type="text" class="form-control" placeholder="结束时间" name="endTime" appDatePicker [(ngModel)]="endTime" />
+                                    </div>
+                                </div>
+                            </div>
+                      </div>
+                  </div>
+                  <div class="portlet-body">
+                      <div class="table-toolbar">
+                          <div class="row">
+                              <div class="col-md-6">
+                                  <div class="btn-group">
+                                      <button id="btn_see" class="btn blue"  (click)="btnSee();">
+                                          查看详情
+                                          <i class="fa fa-edit"></i>
+                                      </button>
+                                  </div>
+                              </div>
+                              <div class="col-md-6 text-right">
+                                  <div class="btn-group">
+                                      <button id="btn_search" class="btn blue" (click)="btnSearch($event);">
+                                          查询
+                                          <i class="fa fa-search"></i>
+                                      </button>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="dataTables_wrapper no-footer" [hidden]="isHidden">
+                          <!-- <div class="row">
+                              <div class="col-md-6">
+                                  <div class="dataTables_length" id="table_length">
+                                      <label>每页显示 <select name="sample_editable_1_length" aria-controls="sample_editable_1" class="form-control input-sm input-xsmall input-inline"><option value="5">5</option><option value="15">15</option><option value="20">20</option><option value="-1">All</option></select> 记录</label>
+                                  </div>
+                              </div>
+                          </div> -->
+                          <table id="product_list" class="table table-hover ">
+                              <thead>
+                                  <tr>
+                                       <th class="col-md-1"> <label class="mt-checkbox"><input type="checkbox" name="" [(ngModel)]="selectAll" (click)="all(selectAll)" /><span></span></label> </th>
+                                      <th class="col-md-1"> 序号 </th>
+                                      <th> 产品编号 </th>
+                                      <th> 产品名称 </th>
+                                      <th> 产品类型 </th>
+                                      <th> 审批环节 </th>
+                                      <th> 审批结果 </th>
+                                      <th> 产品创建时间 </th>
+                                      <th> 产品审批时间 </th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let item of response;let i=index;">
+                                  <td><input type="checkbox" name="" [(ngModel)]="item.checkStatus" [(checked)]="selectAll" />
+                                  </td>
+                                  <td>{{item.id}}</td>
+                                  <td>{{item.num}}</td>
+                                  <td>{{item.productName}}</td>
+                                  <td>{{ConverProductType(item.type)}}</td>
+                                  <td>{{item.segmentName}}</td>
+                                  <td>{{item.status}}</td>
+                                  <td>{{item.productCreateDate}}</td>
+                                  <td>{{item.approveDoneDate}}</td>
+                  
+                                  
+                                </tr>
+                              </tbody>
+                          </table>
+                      </div>
+                      <div class="col-lg-12 col-md-12" *ngIf="response.length>0">
+                        <app-pagination [PageIndex]="_pageIndex" [PageSize]="_pageSize" [PageCount]="GetPageCount()" [Total]="_total" (dataList)="btnSearch($event);"></app-pagination>
+                      </div>
+                  </div>
+              </div>
+              <!-- END SAMPLE TABLE PORTLET-->
+          </div>
+      </div>
+      <!-- END CONTENT BODY -->
+  </div>
+  <!-- END CONTENT -->
+</div>

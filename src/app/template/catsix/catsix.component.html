@@ -1,0 +1,123 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet-title">
+      <span class="caption-subject bold uppercase"> CAT16：变更退票费</span>
+    </div>
+    <div class="col-md-12">
+      <div class="portlet light">
+        <div class="portlet-body form">
+          <div class="row">
+            <div class="col-md-12 text-right">
+              <div class="btn-group">
+                <button id="btn_search" class="btn blue" (click)="btnSearch(null);">
+                  查询
+                  <i class="fa fa-search"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="table-scrollable" style="overflow: auto;">
+            <div style="width:1500px;">
+            <table class="table table-hover table-bordered table-striped order-column" id="product_list">
+              <thead>
+                <tr>
+                  <th [hidden]="isSelectHidden">
+                    <input type="checkbox" name="" [(ngModel)]="selectAll" (click)="all(selectAll)" />
+                  </th>
+                  <th>模板</th>
+                  <th>表号</th>
+                  <th style="min-width: 110px;">允许改期</th>
+                  <th>改期费</th>
+                  <th>货币单位</th>
+                  <th style="min-width: 110px;">允许退票</th>
+                  <th>退票费</th>
+                  <th>货币单位</th>
+                  <th style="min-width: 110px;">NOSHOW</th>
+                  <th>NO SHOW费</th>
+                  <th>货币单位</th>
+                  <th>NOTE</th>
+                  <th [hidden]="isHidden">操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of response;let i=index;">
+                  <ng-container *ngIf="item.module==1">
+                    <td [hidden]="isSelectHidden"></td>
+                    <td>{{item.id}}</td>
+                    <td></td>
+                    <td>
+                      <select id="type" class="form-control" [(ngModel)]="item.changeAllowFlag">
+                        <option *ngFor="let item of optionList " [value]="item.id">{{item.text}}</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input type="text" class="loc2 form-control" [(ngModel)]="item.changeFee" />
+                    </td>
+                    <td>
+                      <input type="text" class="loc2 form-control" [(ngModel)]="item.changeFeeMoneyType" />
+                    </td>
+                    <td>
+                      <select id="type" class="form-control" [(ngModel)]="item.returnAllowFlag">
+                        <option *ngFor="let item of optionList " [value]="item.id">{{item.text}}</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input type="text" class="loc2 form-control" [(ngModel)]="item.returnFee" />
+                    </td>
+                    <td>
+                      <input type="text" class="loc2 form-control" [(ngModel)]="item.returnFeeMoneyType" />
+                    </td>
+                    <td>
+                      <select id="type" class="form-control" [(ngModel)]="item.noShowAllowFlag">
+                        <option *ngFor="let item of optionList " [value]="item.id">{{item.text}}</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input type="text" class="loc2 form-control" [(ngModel)]="item.noShowFee" />
+                    </td>
+                    <td>
+                      <input type="text" class="loc2 form-control" [(ngModel)]="item.noShowFeeMoneyType" />
+                    </td>
+                    <td>
+                      <input type="text" class="loc2 form-control" [(ngModel)]="item.remark" />
+                    </td>
+                  </ng-container>
+                  <ng-container *ngIf="item.module!=1">
+                    <td [hidden]="isSelectHidden">
+                      <input type="checkbox" name="" [(ngModel)]="item.selected" [(checked)]="selectAll" />
+                    </td>
+                    <td>{{item.id}}</td>
+                    <td></td>
+                    <td>{{ConvertType(item.changeAllowFlag)}}</td>
+                    <td>{{item.changeFee}}</td>
+                    <td>{{item.changeFeeMoneyType}}</td>
+                    <td>{{ConvertType(item.returnAllowFlag)}}</td>
+                    <td>{{item.returnFee}}</td>
+                    <td>{{item.returnFeeMoneyType}}</td>
+                    <th>{{ConvertType(item.noShowAllowFlag)}}</th>
+                    <td>{{item.noShowFee}}</td>
+                    <td>{{item.noShowFeeMoneyType}}</td>
+                    <td>{{item.remark}}</td>
+                    <td [hidden]="isHidden">
+                      <button id="btn_del" class="btn purple" (click)="btnEdit(item);">编辑</button>
+                      <button id="btn_del" class="btn red" (click)="btnDel(item);">删除</button>
+                    </td>
+                  </ng-container>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+          <div class="col-lg-12 col-md-12" *ngIf="response.length>0">
+            <app-pagination [PageIndex]="_pageIndex" [PageSize]="_pageSize" [PageCount]="GetPageCount()" [Total]="_total" (dataList)="btnSearch($event);"></app-pagination>
+          </div>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button id="btn_save" type="button" class="btn blue" (click)="btnSave();">保存</button>
+        <button class="btn default" (click)="btnGoBack();"> 返回
+          <i class="fa fa-upload"></i>
+        </button>
+      </div>
+    </div>
+  </div>

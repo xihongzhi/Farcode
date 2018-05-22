@@ -1,0 +1,119 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet-title">
+      <span class="caption-subject bold uppercase"> CAT4：航班限制</span>
+    </div>
+    <div class="col-md-12">
+      <div class="portlet light">
+        <div class="portlet-body form">
+          <div id="od" class="form-group mt-repeater">
+            <div class="group">
+              <div class="mt-repeater-item">
+                <div class="mt-repeater-input">
+                  <label class="control-label">&nbsp;</label>
+                  <select id="type" class="form-control" [(ngModel)]="scopeBeginType">
+                    <option *ngFor="let item of countryList " [value]="item.id">{{item.text}}</option>
+                  </select>
+                </div>
+                <div class="mt-repeater-input">
+                  <label class="control-label">&nbsp;</label>
+                  <br>
+                  <input type="text" class="loc1 form-control" [(ngModel)]="scopeBeginValue"/>
+                </div>
+                <div class="mt-repeater-input">
+                  <label class="control-label">&nbsp;</label>
+                  <select id="type" class="form-control" [(ngModel)]="scopeEndType">
+                    <option *ngFor="let item of countryList " [value]="item.id">{{item.text}}</option>
+                  </select>
+                </div>
+                <div class="mt-repeater-input">
+                  <label class="control-label">&nbsp;</label>
+                  <br>
+                  <input type="text" class="loc2 form-control"  [(ngModel)]="scopeEndValue"/>
+                </div>
+                <div class="mt-repeater-input">
+                  <label class="control-label">&nbsp;</label>
+                  <select id="type" class="form-control" [(ngModel)]="allowFlag">
+                    <option *ngFor="let item of optionList " [value]="item.id">{{item.text}}</option>
+                  </select>
+                </div>
+
+
+                <div class="mt-repeater-input">
+                  <label class="control-label">&nbsp;</label>
+                  <br>
+                  <input type="text" class="loc1 form-control" [(ngModel)]="flightNo" />
+                </div>
+                <div class="mt-repeater-input">
+                  <label class="control-label">&nbsp;</label>
+                  <select id="type" class="form-control" [(ngModel)]="flightConditionType">
+                    <option *ngFor="let item of xorList " [value]="item.id">{{item.text}}</option>
+                  </select>
+                </div>
+                <div class="mt-repeater-input">
+                  <label class="control-label">&nbsp;</label>
+                  <br>
+                  <input type="text" class="loc2 form-control" [(ngModel)]="flightNo1" />
+                </div>
+                <!-- <div class="mt-repeater-input">
+                  <label class="control-label">&nbsp;</label>
+                  <select id="type" class="form-control" [(ngModel)]="country2">
+                    <option *ngFor="let item of countryList " [value]="item.id">{{item.text}}</option>
+                  </select>
+                </div>
+                <div class="mt-repeater-input">
+                  <label class="control-label">&nbsp;</label>
+                  <br>
+                  <input type="text" class="loc2 form-control" />
+                </div> -->
+                <!-- <div class="mt-repeater-input">
+                  <label class="control-label">&nbsp;</label>
+                  <br>
+                  <a href="javascript:;" class="btn btn-success mt-repeater-add" (click)="locationAdd();">
+                    <i class="fa fa-plus"></i> 新增
+                  </a>
+                </div>
+              </div> -->
+
+            </div>
+
+          </div>
+        </div>
+        <!-- <div class="table-scrollable">
+            <table class="table table-hover table-bordered table-striped order-column" id="product_list">
+              <thead>
+                <tr>
+                  <th>模板</th>
+                  <th>表号</th>
+                  <th>地点1</th>
+                  <th>地点2</th>
+                  <th>是否允许</th>
+                  <th>航班号1</th>
+                  <th>关系</th>
+                  <th>航班号2</th>
+                  <th>途径点</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of response;let i=index;">
+                  <td>{{item.id}}</td>
+                  <td>{{item.orig}}</td>
+                  <td>{{item.dest}}</td>
+                  <td>{{item.origCountry}}</td>
+                  <td>{{item.destCountry}}</td>
+                  <td>{{item.rule}}</td>
+                  <td>{{item.fcl}}</td>
+                  <td>{{item.owrt}}</td>
+                  <td>{{item.rtg}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div> -->
+      </div>
+      <div class="form-actions">
+        <button id="btn_save" type="button" class="btn blue" (click)="btnSave();">保存</button>
+        <!-- <a class="btn default" (click)="btnGoBack();">返回</a> -->
+      </div>
+    </div>
+  </div>
+</div>

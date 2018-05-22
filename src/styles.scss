@@ -1,0 +1,45 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+/* 单选按钮、复选按钮 */
+
+.my-Label {
+    margin: 7px 20px 0 0;
+    display: inline-block;
+    cursor: pointer;
+    .my-Radio,
+    .my-checkbox {
+        display: none
+    }
+    .my-Radio-Input {
+        background-color: #fff;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        border-radius: 100%;
+        display: inline-block;
+        height: 16px;
+        margin-right: 10px;
+        margin-top: -1px;
+        vertical-align: middle;
+        width: 16px;
+        line-height: 1
+    }
+    .my-Radio:checked+.my-Radio-Input:after {
+        background-color: #3c8dbc;
+        border-radius: 100%;
+        content: "";
+        display: inline-block;
+        height: 10px;
+        margin: 2px;
+        width: 10px
+    }
+    .my-Radio-Input.my-Checkbox-Input,
+    .my-Radio:checked+.my-Radio-Input.my-Checkbox-Input:after {
+        border-radius: 0
+    }
+}
+
+.table-null {
+    text-align: center;
+    height: 200px;
+    line-height: 200px;
+}

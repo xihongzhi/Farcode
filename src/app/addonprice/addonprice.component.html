@@ -1,0 +1,514 @@
+<div class="page-content-wrapper">
+  <!-- BEGIN CONTENT BODY -->
+  <div class="page-content">
+    <div class="box">
+      <!-- BEGIN PAGE HEADER-->
+      <div class="page-bar">
+        <ul class="page-breadcrumb">
+          <li>
+            <i class="icon-home"></i> ADDON查询
+          </li>
+        </ul>
+      </div>
+      <div class="overlay" *ngIf="loading">
+        <i class="fa fa-refresh fa-spin"></i>
+      </div>
+      <!-- END PAGE HEADER-->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="portlet light ">
+            <div class="portlet-title">
+              <div class="row form-group">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="">航司</label>
+                    <input id="title" value="SC" type="text" [(ngModel)]="carrier" placeholder="航司" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="">Tariff
+                      <span style="color: red"> *</span>
+                    </label>
+                    <select name="tariff" [(ngModel)]="tariff" class="form-control">
+                      <option *ngFor="let item of tariffList" value="{{item.id}}">{{item.name}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="">Fare Class</label>
+                    <input id="search_fare" [(ngModel)]="fcl" type="text" placeholder="Fare Class" class="form-control">
+                  </div>
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="">始发</label>
+                    <input id="search_s_con" type="text" [(ngModel)]="orig" placeholder="始发" class="form-control">
+                  </div>
+                </div>
+                <!-- <div class="col-md-3">
+                          <label for=""> </label>
+                          <div class="form-group md-checkbox-inline">
+                            <div class="md-checkbox">
+                              <input type="checkbox" id="checkbox1" class="md-check" [(ngModel)]="bothway">
+                              <label for="checkbox1">
+                                <span class="inc"></span>
+                                <span class="check"></span>
+                                <span class="box"></span>
+                                双向
+                              </label>
+                            </div>
+                          </div>
+                        </div> -->
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="">到达</label>
+                    <input id="search_d_con" type="text" [(ngModel)]="dest" placeholder="到达" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <label for="OW/RT">OW/RT</label>
+                  <select name="owrt" [(ngModel)]="owrt" class="form-control">
+                    <option *ngFor="let item of owrtList" value="{{item.id}}">{{item.name}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row form-group">
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="">rtg</label>
+                    <input type="text" placeholder="rtg" [(ngModel)]="rtg" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="">Footnote</label>
+                    <input type="text" placeholder="Footnote" [(ngModel)]="ftnt" class="form-control">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12 text-right">
+                  <div class="btn-group">
+                    <button id="btn_search" class="btn blue" (click)="btnSearch(null);">
+                      查询
+                      <i class="fa fa-search"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="content" class="portlet-body" [hidden]="isHidden">
+            <div class="col-md-12">
+              <ul class="nav nav-tabs" style="margin-bottom: 0">
+                <li id="t1" class="active">
+                  <a href="#tab_2_1" data-toggle="tab" aria-expanded="true"> 查询结果 </a>
+                </li>
+                <li id="t2" class="">
+                  <a href="#tab_2_2" data-toggle="tab" aria-expanded="false"> 修改结果 </a>
+                </li>
+              </ul>
+              <div class="tab-content">
+                <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                <div class="portlet light tab-pane fade active in" id="tab_2_1">
+                  <div class="portlet-body">
+                    <div class="table-toolbar">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="btn-group">
+                            <button id="btn_copy" class="btn purple" (click)="btnCopy();">
+                              复制
+                              <i class="fa fa-copy"></i>
+                            </button>
+                          </div>
+                          <div class="btn-group">
+                            <button id="btn_add" class="btn blue" (click)="btnAdd();">
+                              插入
+                              <i class="fa fa-plus"></i>
+                            </button>
+                          </div>
+                          <div class="btn-group">
+                            <button id="btn_cancel" class="btn green" (click)="btnCancel();">
+                              取消
+                              <i class="fa fa-arrow-left"></i>
+                            </button>
+                          </div>
+                          <div class="btn-group">
+                            <button id="btn_update" class="btn blue" (click)="btnSubmit();">
+                              保存
+                              <i class="fa fa-save"></i>
+                            </button>
+                          </div>
+                          <div class="btn-group">
+                            <button id="btn_save" class="btn red" (click)="btnSave();">
+                              提交修改
+                              <i class="fa fa-upload"></i>
+                            </button>
+                          </div>
+                        </div>
+                        <!-- <div class="col-md-6">
+                                                <div class="btn-group pull-right">
+                                                    <button class="btn green  btn-outline dropdown-toggle" data-toggle="dropdown">
+                                                        工具
+                                                        <i class="fa fa-angle-down"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu pull-right">
+                                                        <li>
+                                                            <a href="javascript:;">
+                                                                <i class="fa fa-print"></i> 打印
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:;">
+                                                                <i class="fa fa-file-pdf-o"></i> 导出PDF
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:;">
+                                                                <i class="fa fa-file-excel-o"></i> 导出Excel
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div> -->
+                      </div>
+                    </div>
+                    <!-- <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="dataTables_length" id="table_length">
+                                                <label>每页显示 
+                                                        <select name="inline" [(ngModel)]="inline" class="form-control input-sm input-xsmall input-inline" (change)="selectChange();">
+                                                                <option *ngFor="let item of inlineList" value="{{item.id}}">{{item.name}}</option>
+                                                              </select> 
+                                                    记录</label>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                    <div class="table-scrollable"style="overflow: auto;">
+                        <div style="width:1800px;">
+                      <table class="table table-hover table-bordered table-striped order-column" id="product_list">
+                        <thead>
+                          <tr>
+                            <th>
+                              <input type="checkbox" name="" [(ngModel)]="selectAll" (click)="all(selectAll)" />
+                            </th>
+                            <th>序号</th>
+                            <th style="min-width:120px">Tariff</th>
+                            <th>CXR</th>
+                            <th>始发</th>
+                            <th>到达</th>
+                            <th>始发国家</th>
+                            <th>到达国家</th>
+                            <th>Fare Class</th>
+                            <th style="min-width: 90px;">OW/RT</th>
+                            <th>Zoon</th>
+                            <th>Routing</th>
+                            <th>Fn</th>
+                            <th>货币</th>
+                            <th>价格</th>
+                            <th>生效日期</th>
+                            <th>失效日期</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of response;let i=index;">
+                            <ng-container *ngIf="item.module==1">
+                              <td></td>
+                              <td>{{item.id}}</td>
+                              <td>
+                                <select name="tariff" [(ngModel)]="item.tariff" class="form-control">
+                                  <option *ngFor="let items of tariffList" value="{{items.id}}">{{items.name}}</option>
+                                </select>
+                              </td>
+                              <td>
+                                <input type="text" [(ngModel)]="item.cxr" class="form-control">
+                              </td>
+                              <td>
+                                <input type="text" [(ngModel)]="item.location1" class="form-control">
+                              </td>
+                              <td>
+                                <input type="text" [(ngModel)]="item.location2" class="form-control">
+                              </td>
+                              <td>
+                                <!-- <input type="text" [(ngModel)]="item.nation1" class="form-control"> -->
+                              </td>
+                              <td>
+                                <!-- <input type="text" [(ngModel)]="item.nation2" class="form-control"> -->
+                              </td>
+                              <td>
+                                <input type="text" [(ngModel)]="item.fcl" class="form-control">
+                              </td>
+                              <td>
+                                <select name="owrt" [(ngModel)]="item.owrt" class="form-control">
+                                  <option *ngFor="let items of owrtList" value="{{items.id}}">{{items.name}}</option>
+                                </select>
+                              </td>
+                              <td>
+                                <input type="text" [(ngModel)]="item.zone" class="form-control">
+                              </td>
+                              <td>
+                                <input type="text" [(ngModel)]="item.rtg" class="form-control">
+                              </td>
+                              <td>
+                                <input type="text" [(ngModel)]="item.fn" class="form-control">
+                              </td>
+                              <td>
+                                <input type="text" [(ngModel)]="item.currency" class="form-control">
+                              </td>
+                              <td>
+                                <input type="text" [(ngModel)]="item.price" class="form-control">
+                              </td>
+                              <td>
+                                <input type="text" appDatePicker [(ngModel)]="item.effDate" class="form-control">
+                              </td>
+                              <td>
+                                <!-- <input type="text" size="16" appDatePicker [(ngModel)]="item.disDate" class="form-control"> -->
+                              </td>
+                            </ng-container>
+                            <ng-container *ngIf="item.module!=1">
+                              <td *ngIf="item.del==1">
+                                删除
+                              </td>
+                              <td *ngIf="item.del==1">
+                                <del>{{item.id}}</del>
+                              </td>
+                              <td *ngIf="item.del==1">
+                                <del>{{convertAf(item.tariff)}}</del>
+                              </td>
+                              <td *ngIf="item.del==1">
+                                <del>{{item.cxr}}</del>
+                              </td>
+                              <td *ngIf="item.del==1">
+                                <del>{{item.location1}}</del>
+                              </td>
+                              <td *ngIf="item.del==1">
+                                <del>{{item.location2}}</del>
+                              </td>
+                              <td *ngIf="item.del==1">
+                                <del>{{item.nation1}}</del>
+                              </td>
+                              <td *ngIf="item.del==1">
+                                <del>{{item.nation2}}</del>
+                              </td>
+                              <td *ngIf="item.del==1">
+                                <del>{{item.fcl}}</del>
+                              </td>
+                              <td *ngIf="item.del==1">
+                                <del>{{ConvertOwrt(item.owrt)}}</del>
+                              </td>
+                              <td *ngIf="item.del==1">
+                                <del>{{item.zone}}</del>
+                              </td>
+                              <td *ngIf="item.del==1">
+                                <del>{{item.rtg}}</del>
+                              </td>
+                              <td *ngIf="item.del==1">
+                                <del>{{item.fn}}</del>
+                              </td>
+                              <td *ngIf="item.del==1">
+                                <del>{{item.currency}}</del>
+                              </td>
+                              <td *ngIf="item.del==1">
+                                <del>{{item.price}}</del>
+                              </td>
+                              <td *ngIf="item.del==1">
+                                <del>{{item.effDate}}</del>
+                              </td>
+                              <td *ngIf="item.del==1">
+                                <del>{{item.disDate}}</del>
+                              </td>
+                              <td *ngIf="item.del!=1">
+                                <input type="checkbox" name="" [(ngModel)]="item.status" [(checked)]="selectAll" />
+                              </td>
+                              <td *ngIf="item.del!=1">{{item.id}}</td>
+                              <td *ngIf="item.del!=1">{{convertAf(item.tariff)}}</td>
+                              <td *ngIf="item.del!=1">{{item.cxr}}</td>
+                              <td *ngIf="item.del!=1">{{item.location1}}</td>
+                              <td *ngIf="item.del!=1">{{item.location2}}</td>
+                              <td *ngIf="item.del!=1">{{item.nation1}}</td>
+                              <td *ngIf="item.del!=1">{{item.nation2}}</td>
+                              <td *ngIf="item.del!=1">{{item.fcl}}</td>
+                              <td *ngIf="item.del!=1">{{ConvertOwrt(item.owrt)}}</td>
+                              <td *ngIf="item.del!=1">{{item.zone}}</td>
+                              <td *ngIf="item.del!=1">{{item.rtg}}</td>
+                              <td *ngIf="item.del!=1">{{item.fn}}</td>
+                              <td *ngIf="item.del!=1">{{item.currency}}</td>
+                              <td *ngIf="item.del!=1">{{item.price}}</td>
+                              <td *ngIf="item.del!=1">{{item.effDate}}</td>
+                              <td *ngIf="item.del!=1">{{item.disDate}}</td>
+                            </ng-container>
+                          </tr>
+                        </tbody>
+                      </table>
+                      </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12" *ngIf="response.length>0">
+                      <app-pagination [PageIndex]="_pageIndex" [PageSize]="_pageSize" [PageCount]="GetPageCount()" [Total]="_total" (dataList)="btnSearch($event);"></app-pagination>
+                    </div>
+                  </div>
+                </div>
+                <div class="portlet light tab-pane fade" id="tab_2_2">
+                  <div class="portlet-title">
+                    <div class="caption font-dark">
+                      <i class="icon-settings font-dark"></i>
+                      <span class="caption-subject bold uppercase"> 修改结果 </span>
+                    </div>
+                  </div>
+                  <div class="portlet-body">
+                    <div class="table-toolbar">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="btn-group">
+                            <button id="btn_sub" class="btn red" (click)="btnSub();"> 提交审批
+                              <i class="fa fa-upload"></i>
+                            </button>
+                          </div>
+                        </div>
+                        <!-- <div class="col-md-6">
+                                                <div class="btn-group pull-right">
+                                                    <button class="btn green  btn-outline dropdown-toggle" data-toggle="dropdown">工具
+                                                    <i class="fa fa-angle-down"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu pull-right">
+                                                        <li>
+                                                            <a href="javascript:;">
+                                                                <i class="fa fa-print"></i> 打印
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:;">
+                                                                <i class="fa fa-file-pdf-o"></i> 导出PDF
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:;">
+                                                                <i class="fa fa-file-excel-o"></i> 导出Excel
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div> -->
+                      </div>
+                    </div>
+                    <table class="table table-hover table-bordered table-striped order-column">
+                      <thead>
+                        <tr>
+                          <th>
+                            <input type="checkbox" name="" [(ngModel)]="selectAll" (click)="all(selectAll)" />
+                          </th>
+                          <th>序号</th>
+                          <th>Tariff</th>
+                          <th>CXR</th>
+                          <th>始发</th>
+                          <th>到达</th>
+                          <th>始发国家</th>
+                          <th>到达国家</th>
+                          <th>Fare Class</th>
+                          <th>OW/RT</th>
+                          <th>Zoon</th>
+                          <th>Routing</th>
+                          <th>Fn</th>
+                          <th>货币</th>
+                          <th>价格</th>
+                          <th>生效日期</th>
+                          <th>失效日期</th>
+                        </tr>
+                      </thead>
+                      <tbody id="new_table">
+                        <tr *ngFor="let item of priceList;let i=index;">
+                          <td *ngIf="item.del==1">
+                            删除
+                          </td>
+                          <td *ngIf="item.del==1">
+                            <del>{{item.id}}</del>
+                          </td>
+                          <td *ngIf="item.del==1">
+                            <del>{{convertAf(item.tariff)}}</del>
+                          </td>
+                          <td *ngIf="item.del==1">
+                            <del>{{item.cxr}}</del>
+                          </td>
+                          <td *ngIf="item.del==1">
+                            <del>{{item.location1}}</del>
+                          </td>
+                          <td *ngIf="item.del==1">
+                            <del>{{item.location2}}</del>
+                          </td>
+                          <td *ngIf="item.del==1">
+                            <del>{{item.nation1}}</del>
+                          </td>
+                          <td *ngIf="item.del==1">
+                            <del>{{item.nation2}}</del>
+                          </td>
+
+                          <td *ngIf="item.del==1">
+                            <del>{{item.fcl}}</del>
+                          </td>
+                          <td *ngIf="item.del==1">
+                            <del>{{ConvertOwrt(item.owrt)}}</del>
+                          </td>
+                          <td *ngIf="item.del==1">
+                            <del>{{item.zone}}</del>
+                          </td>
+                          <td *ngIf="item.del==1">
+                            <del>{{item.rtg}}</del>
+                          </td>
+                          <td *ngIf="item.del==1">
+                            <del>{{item.fn}}</del>
+                          </td>
+                          <td *ngIf="item.del==1">
+                            <del>{{item.currency}}</del>
+                          </td>
+                          <td *ngIf="item.del==1">
+                            <del>{{item.price}}</del>
+                          </td>
+                          <td *ngIf="item.del==1">
+                            <del>{{item.effDate}}</del>
+                          </td>
+                          <td *ngIf="item.del==1">
+                            <del>{{item.disDate}}</del>
+                          </td>
+
+                          <td *ngIf="item.del!=1">
+                            <input type="checkbox" name="" [(ngModel)]="item.status" [(checked)]="selectAll" />
+                          </td>
+                          <td *ngIf="item.del!=1">{{item.id}}</td>
+                          <td *ngIf="item.del!=1">{{convertAf(item.tariff)}}</td>
+                          <td *ngIf="item.del!=1">{{item.cxr}}</td>
+                          <td *ngIf="item.del!=1">{{item.location1}}</td>
+                          <td *ngIf="item.del!=1">{{item.location2}}</td>
+                          <td *ngIf="item.del!=1">{{item.nation1}}</td>
+                          <td *ngIf="item.del!=1">{{item.nation2}}</td>
+
+                          <td *ngIf="item.del!=1">{{item.fcl}}</td>
+                          <td *ngIf="item.del!=1">{{ConvertOwrt(item.owrt)}}</td>
+                          <td *ngIf="item.del!=1">{{item.zone}}</td>
+                          <td *ngIf="item.del!=1">{{item.rtg}}</td>
+                          <td *ngIf="item.del!=1">{{item.fn}}</td>
+                          <td *ngIf="item.del!=1">{{item.currency}}</td>
+                          <td *ngIf="item.del!=1">{{item.price}}</td>
+                          <td *ngIf="item.del!=1">{{item.effDate}}</td>
+                          <td *ngIf="item.del!=1">{{item.disDate}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- END EXAMPLE TABLE PORTLET-->
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END CONTENT BODY -->
+</div>
+<!-- <app-modal [ComponentName]="ComponentName" (SubmitEvent)="btnSubmit($event)"></app-modal> -->

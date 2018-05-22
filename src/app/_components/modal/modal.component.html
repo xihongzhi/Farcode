@@ -1,0 +1,22 @@
+<div class="modal fade" id="{{ComponentName}}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="closeModal();">
+                <span>×</span></button>
+                <h4 class="modal-title">{{modalTitle}}</h4>
+            </div>
+
+            <div class="modal-body">
+                <ng-template #container></ng-template>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-flat btn-default pull-left" (click)="closeModal();">关 闭</button>
+                <button type="button" class="btn btn-flat btn-primary" (click)="SubmitEvent.emit(Parameter);">提 交</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

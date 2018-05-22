@@ -1,0 +1,172 @@
+
+<div class="page-content-wrapper">
+  <!-- BEGIN CONTENT BODY -->
+  <div class="page-content">
+      <div class="box">
+    <!-- BEGIN PAGE HEADER-->
+    <div class="page-bar">
+      <ul class="page-breadcrumb">
+        <li>
+          <i class="icon-home"></i> 查询产品
+        </li>
+      </ul>
+    </div>
+    <div class="overlay" *ngIf="loading">
+        <i class="fa fa-refresh fa-spin"></i>
+      </div>
+    <!-- END PAGE HEADER-->
+    <div class="row">
+      <div class="col-md-12">
+        <!-- BEGIN SAMPLE TABLE PORTLET-->
+        <div class="portlet light ">
+          <div class="portlet-title">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="control-label">产品名称</label>
+                  <input id="name" type="text" [(ngModel)]="name" placeholder="产品名称" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label class="control-label">生效日期</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="生效日期" name="validDate" size="16" appDatePicker [(ngModel)]="validDate"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="control-label">产品类型</label>
+                  <select id="type" class="form-control" [(ngModel)]="type">
+                    <option *ngFor="let item of typeList " [value]="item.id">{{item.text}}</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="control-label">失效日期</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="失效日期" name="invalidDate" size="16" appDatePicker [(ngModel)]="invalidDate"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="control-label">产品编号</label>
+                  <input id="num" type="text" placeholder="产品编号" [(ngModel)]="num" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label class="control-label">状态</label>
+                  <select id="status" class="form-control" [(ngModel)]="status">
+                    <option *ngFor="let item of stateList " [value]="item.id">{{item.text}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 text-right">
+                <div class="btn-group">
+            
+                  <button id="btn_search" class="btn blue" (click)="btnSearch(null);">
+                    查询
+                    <i class="fa fa-search"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="portlet-body">
+            <div class="table-toolbar">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="btn-group">
+                      <button class="btn blue" (click)="btnAdd();">
+                          新建
+                          <i class="fa fa-plus"></i>
+                        </button>
+                    <button id="btn_see" class="btn green" (click)="btnSee();">
+                      查看
+                      <i class="fa fa-eye"></i>
+                    </button>
+                    <button id="btn_edit" class="btn purple" (click)="btnEdit();">
+                      修改
+                      <i class="fa fa-edit"></i>
+                    </button>
+                    <button id="btn_copy" class="btn blue" (click)="btnCopy();">
+                      复制
+                      <i class="fa fa-copy"></i>
+                    </button>
+                    <button id="btn_del" class="btn red" (click)="btnDel();">
+                      删除
+                      <i class="fa fa-remove"></i>
+                   </button>
+                    <!-- <button id="btn_add_price" class="btn yellow" (click)="btnAddPrice();">
+                      添加运价
+                      <i class="fa fa-adjust"></i>
+                    </button>
+                    <button id="btn_updata" class="btn red">
+                      提交审批
+                      <i class="fa fa-arrow-circle-up"></i>
+                    </button> -->
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="dataTables_wrapper no-footer" [hidden]="isHidden">
+              <!-- <div class="row">
+                <div class="col-md-6">
+                  <div class="dataTables_length" id="table_length">
+                    <label>每页显示
+                      <select name="sample_editable_1_length" aria-controls="sample_editable_1" class="form-control input-sm input-xsmall input-inline">
+                        <option value="5">5</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="-1">All</option>
+                      </select> 记录</label>
+                  </div>
+                </div>
+              </div> -->
+              <table class="table table-hover" id="product_list">
+                <thead>
+                  <tr>
+                    <th>
+                      <input type="checkbox" name="" [(ngModel)]="selectAll" (click)="all(selectAll)" />
+                    </th>
+                    <th class="text-center"> 序号 </th>
+                    <th> 产品编号 </th>
+                    <th> 产品名称 </th>
+                    <th> 产品类型 </th>
+                    <th> 生效日期 </th>
+                    <th> 失效日期 </th>
+                    <th> 销售范围 </th>
+                    <th> 状态 </th>
+                    <th> 创建时间 </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of response;let i=index;">
+                    <td><input type="checkbox" name="" [(ngModel)]="item.checkStatus" [(checked)]="selectAll" />
+                    </td>
+                    <td>{{item.id}}</td>
+                    <td>{{item.num}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.type}}</td>
+                    <td>{{convertDate(item.validDate)}}</td>
+                    <td>{{convertDate(item.invalidDate)}}</td>
+                    <td>{{item.sellScope}}</td>
+                    <td>{{item.status}}</td>
+                    <td>{{item.createTime}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-lg-12 col-md-12" *ngIf="response.length>0">
+              <app-pagination [PageIndex]="_pageIndex" [PageSize]="_pageSize" [PageCount]="GetPageCount()" [Total]="_total" (dataList)="btnSearch($event);"></app-pagination>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>

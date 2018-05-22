@@ -1,0 +1,74 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet-title">
+      <span class="caption-subject bold uppercase"> CAT5：提前订座/出票设置</span>
+    </div>
+    <div class="col-md-12">
+      <div class="portlet light">
+        <div class="portlet-body form">
+          <div id="od" class="form-group mt-repeater">
+            <div class="group">
+              <div class="mt-repeater-item">
+                <div class="mt-repeater-input">
+                  <label class="control-label"> 回程是否允许OPEN:</label>
+                  <br>
+                  <label *ngFor="let t of typeList">
+                      <input type="radio" (change)="type=t.id" name="type" [checked]="type===t.id">{{t.name}}
+                    </label>
+
+                </div>
+
+                <div class="mt-repeater-input">
+                  <label class="control-label">提前购票规定:</label>
+                  <br>
+                  <input type="text" class="loc2 form-control" [(ngModel)]="advanceTicketTime"/>
+                </div>
+                <div class="mt-repeater-input">
+                  <label class="control-label">&nbsp;</label>
+                  <select id="type" class="form-control" [(ngModel)]="advanceTicketTimeunit">
+                    <option *ngFor="let item of timeList " [value]="item.id">{{item.text}}</option>
+                  </select>
+                </div>
+                <!-- <div class="mt-repeater-input">
+                  <label class="control-label">&nbsp;</label>
+                  <br>
+                  <a href="javascript:;" class="btn btn-success mt-repeater-add" (click)="btnAdd();">
+                    <i class="fa fa-plus"></i> 新增
+                  </a>
+                </div> -->
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+        <!-- <div class="table-scrollable">
+            <table class="table table-hover table-bordered table-striped order-column" id="product_list">
+              <thead>
+                <tr>
+                  <th>模板</th>
+                  <th>表号</th>
+                  <th>是否允许OPEN</th>
+                  <th>提前购票期</th>
+                  <th>单位</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of response;let i=index;">
+                  <td></td>
+                  <td></td>
+                  <td>{{item.returnTripAllowOpen}}</td>
+                  <td>{{item.advanceTicketTime}}</td>
+                  <td>{{item.advanceTicketTimeunit}}</td>
+                </tr>
+              
+              </tbody>
+            </table>
+          </div> -->
+      </div>
+      <div class="form-actions">
+        <button id="btn_save" type="button" class="btn blue" (click)="btnSave();">保存</button>
+      </div>
+    </div>
+  </div>
+</div>

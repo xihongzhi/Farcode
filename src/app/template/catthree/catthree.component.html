@@ -1,0 +1,78 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet-title">
+      <span class="caption-subject bold uppercase"> CAT6：最小停留</span>
+    </div>
+    <div class="col-md-12">
+      <div class="portlet light">
+        <div class="portlet-body form">
+          <div class="row">
+            <div class="col-md-12 text-right">
+              <div class="btn-group">
+                <button id="btn_search" class="btn blue" (click)="btnSearch(null);">
+                  查询
+                  <i class="fa fa-search"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-scrollable">
+            <table class="table table-hover table-bordered table-striped order-column" id="product_list">
+              <thead>
+                <tr>
+                  <th [hidden]="isSelectHidden">
+                    <input type="checkbox" name="" [(ngModel)]="selectAll" (click)="all(selectAll)" />
+                  </th>
+                  <th>模板</th>
+                  <th>表号</th>
+                  <th>最小停留期</th>
+                  <th>单位</th>
+                  <th [hidden]="isHidden">操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of response;let i=index;">
+                  <ng-container *ngIf="item.module==1">
+                      <td [hidden]="isSelectHidden"></td>
+                    <td>{{item.id}}</td>
+                    <td></td>
+                    <td>
+                      <input type="text" class="loc2 form-control" [(ngModel)]="item.stayTime"  />
+                    </td>
+                    <td>
+                        <select id="time" class="form-control" [(ngModel)]="item.stayTimeUnit">
+                            <option *ngFor="let item of timeList " [value]="item.id">{{item.text}}</option>
+                          </select>
+                    </td>
+                  </ng-container>
+                  <ng-container *ngIf="item.module!=1">
+                    <td [hidden]="isSelectHidden">
+                      <input type="checkbox" name="" [(ngModel)]="item.selected" [(checked)]="selectAll" />
+                    </td>
+                    <td>{{item.id}}</td>
+                    <td></td>
+                    <td>{{item.stayTime}}</td>
+                    <td>{{ConvertDW(item.stayTimeUnit)}}</td>
+                    <td [hidden]="isHidden">
+                      <button id="btn_del" class="btn purple" (click)="btnEdit(item);">编辑</button>
+                      <button id="btn_del" class="btn red" (click)="btnDel(item);">删除</button>
+                    </td>
+                  </ng-container>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-lg-12 col-md-12" *ngIf="response.length>0">
+            <app-pagination [PageIndex]="_pageIndex" [PageSize]="_pageSize" [PageCount]="GetPageCount()" [Total]="_total" (dataList)="btnSearch($event);"></app-pagination>
+          </div>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button id="btn_save" type="button" class="btn blue" (click)="btnSave();">保存</button>
+        <button class="btn default" (click)="btnGoBack();"> 返回
+          <i class="fa fa-upload"></i>
+        </button>
+      </div>
+    </div>
+  </div>
