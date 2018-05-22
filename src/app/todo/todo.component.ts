@@ -39,6 +39,7 @@ export class TodoComponent  extends PagebaseService implements OnInit {
   ngOnInit() {
     this.typeList= [{id: "",text:'全部'},{id:1,text:'公布'},{id:2,text:'销售'},{id:3,text:'中转'},{id:4,text:'其他'}];
     this.partList= [{id: "",text:'全部'},{id:'济南',text:'济南'},{id:'首尔',text:'首尔'},{id:'曼谷',text:'曼谷'}];
+    this.btnSearch(null);
   }  
   btnSearch(event: any):void{
     this.isHidden=false;

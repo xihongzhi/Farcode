@@ -21,10 +21,7 @@
 
       "../node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css",
       "../node_modules/angular2-layer/css/dialog.css",
-      "styles.scss",
-      "../node_modules/primeng/resources/primeng.min.css",
-      "../node_modules/primeng/resources/themes/omega/theme.css",
-      "../node_modules/font-awesome/css/font-awesome.min.css"
+      "styles.scss"
     ],
     "scripts": [
       "../node_modules/jquery/dist/jquery.min.js",
