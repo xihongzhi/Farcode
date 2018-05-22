@@ -39,7 +39,6 @@ import { TodoComponent } from './todo/todo.component';
 import { CompletedComponent } from './completed/completed.component';
 import { SharedComponent } from './shared/shared.component';
 import { AddonpriceComponent } from './addonprice/addonprice.component';
-import { AtimeComponent } from './product-edit/atime/atime.component';
 import { TaskdetailComponent } from './taskdetail/taskdetail.component';
 import { ProductpriceComponent } from './productprice/productprice.component';
 import { ExtendsService } from './_common/extends.service';
@@ -100,7 +99,6 @@ export function interceptorFactory(xhrBackend: XHRBackend, requestOption: Reques
     CompletedComponent,
     SharedComponent,
     AddonpriceComponent,
-    AtimeComponent,
     TaskdetailComponent,
     ProductpriceComponent,
     RoletempleteComponent,
@@ -162,7 +160,6 @@ export function interceptorFactory(xhrBackend: XHRBackend, requestOption: Reques
   bootstrap: [AppComponent],
   entryComponents: [
     NgLayerComponent,
-    AtimeComponent,
     ModifypasswordComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

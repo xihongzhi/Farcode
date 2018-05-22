@@ -1,5 +1,3 @@
-import { AtimeComponent } from './atime/atime.component';
-
 import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver, ComponentFactory, ComponentRef, OnDestroy } from '@angular/core';
 
 import { Observable, Observer } from "rxjs";
