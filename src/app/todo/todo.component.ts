@@ -30,7 +30,7 @@ export class TodoComponent  extends PagebaseService implements OnInit {
   productName:string ='';
   productNum:string = '';
 
-  
+
   constructor(private activatedRoute: ActivatedRoute, private _ajax: AjaxService, private _elem: ElementService, private _util: UtilsService, private _export: ExportServiceService, private router: Router, private _expend: ExtendsService) {
     super();
      this.ConverProductType=_util.ConverProductType;
@@ -40,7 +40,7 @@ export class TodoComponent  extends PagebaseService implements OnInit {
     this.typeList= [{id: "",text:'全部'},{id:1,text:'公布'},{id:2,text:'销售'},{id:3,text:'中转'},{id:4,text:'其他'}];
     this.partList= [{id: "",text:'全部'},{id:'济南',text:'济南'},{id:'首尔',text:'首尔'},{id:'曼谷',text:'曼谷'}];
     this.btnSearch(null);
-  }  
+  }
   btnSearch(event: any):void{
     this.isHidden=false;
     this.loading=true;
@@ -55,17 +55,17 @@ export class TodoComponent  extends PagebaseService implements OnInit {
             "num":this.productNum=''?null:this.productNum,
             "productName":this.productName=''?null:this.productName,
             "type": this.type=''?null:this.type,
-            "userId": 11, 
+            "userId": 11,
             "approveStatus":0
-            
+
   }
 
   if (event) {
     parameters.page = event.PageIndex;
     parameters.limit = event.PageSize;
   }
-  
-   if (this.productName !=''){this.pp += ',"productName":"' + this.productName + '"'}  
+
+   if (this.productName !=''){this.pp += ',"productName":"' + this.productName + '"'}
    if (this.productNum !=''){this.pp += ',"num":"' + this.productNum + '"'}
    //if (this.type !=null && this.type.toString() !=''){this.pp += ',"type":' + this.type.toString()}
   debugger;

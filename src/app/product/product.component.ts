@@ -110,6 +110,15 @@ export class ProductComponent extends PagebaseService implements OnInit {
       this._elem.tip("请选择一个产品信息！");
     }
   }
+
+  urleNavigate(id){
+    this.router.navigate(['shared/productdetail'],{
+      queryParams: {
+        id: id
+      }
+    })
+  }
+
   // btnAddPrice():void{
   //   this.router.navigate(['shared/productprice'],{
   //     queryParams:{
@@ -197,4 +206,40 @@ export class ProductComponent extends PagebaseService implements OnInit {
   btnAdd(): void {
     this.router.navigate(['shared/productedit']);
   }
+
+  btnSub():void{
+    let newObj: any;
+    for (var i = 0; i < this.response.length; i++) {
+      if (this.response[i].checkStatus == true) {
+        let item = this.response[i];
+        if(item.status=="未提交"){
+          newObj = this._expend.extend(true, {}, item, item);
+          this.response[i].checkStatus = false;
+          break;
+        }
+      }
+    }
+    debugger;
+    if (newObj) {
+      let parm = {
+        productId: newObj.id
+      }
+      this.loading=true;
+      this._ajax.CorePost("fcmanager/approve/save", parm, 2).subscribe(responses => {
+        this.response = [];
+        if (responses.code == "0") {
+          this._elem.tip(`提交成功`);
+          this.btnSearch(null);
+        } else {
+          this._elem.tip(`${responses.message}`);
+        }
+        this.loading = false;
+      });
+    }
+    else {
+      this._elem.tip("请选择一个产品信息！");
+    }
+  }
+
+
 }

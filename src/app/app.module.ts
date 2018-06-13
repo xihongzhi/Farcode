@@ -1,3 +1,11 @@
+import "zone.js";
+import "reflect-metadata";
+
+import {Component, ViewEncapsulation} from '@angular/core'
+
+import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+
+
 
 import { ExportServiceService } from './_common/export-service.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -6,7 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 import { Http, HttpModule, XHRBackend, RequestOptions } from '@angular/http';
 import { PathLocationStrategy, LocationStrategy, HashLocationStrategy } from '@angular/common';
-import { NgLayer, NgLayerRef, NgLayerComponent, LayerConfig } from "angular2-layer";
+import { NgLayer, NgLayerRef,  LayerConfig, NgLayerComponent } from "angular2-layer";
 
 import { routing, appRouters } from "./app.routing";
 import { CookieService } from 'angular2-cookie';
@@ -39,6 +47,7 @@ import { TodoComponent } from './todo/todo.component';
 import { CompletedComponent } from './completed/completed.component';
 import { SharedComponent } from './shared/shared.component';
 import { AddonpriceComponent } from './addonprice/addonprice.component';
+import { AtimeComponent } from './product-edit/atime/atime.component';
 import { TaskdetailComponent } from './taskdetail/taskdetail.component';
 import { ProductpriceComponent } from './productprice/productprice.component';
 import { ExtendsService } from './_common/extends.service';
@@ -85,8 +94,8 @@ export function interceptorFactory(xhrBackend: XHRBackend, requestOption: Reques
     DatePickerDirective,
     PaginationComponent,
     LoginComponent,
-
     NgLayerComponent,
+  
     FooterComponent,
     HeaderComponent,
     MenuComponent,
@@ -99,6 +108,7 @@ export function interceptorFactory(xhrBackend: XHRBackend, requestOption: Reques
     CompletedComponent,
     SharedComponent,
     AddonpriceComponent,
+    AtimeComponent,
     TaskdetailComponent,
     ProductpriceComponent,
     RoletempleteComponent,
@@ -158,8 +168,8 @@ export function interceptorFactory(xhrBackend: XHRBackend, requestOption: Reques
     ExtendsService,
     ModalService],
   bootstrap: [AppComponent],
-  entryComponents: [
-    NgLayerComponent,
+  entryComponents: [NgLayerComponent,
+    AtimeComponent,
     ModifypasswordComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

@@ -1,3 +1,11 @@
+import "zone.js";
+import "reflect-metadata";
+
+import {Component, NgModule, ViewEncapsulation} from '@angular/core'
+import {BrowserModule} from '@angular/platform-browser';
+import {FormsModule} from '@angular/Forms';
+import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+
 import { Injectable, ViewContainerRef } from '@angular/core';
 //import { NgLayer, NgLayerRef, NgLayerComponent, LayerConfig } from "angular2-layer";
 import { NgLayer, NgLayerRef, LayerConfig } from "angular2-layer";

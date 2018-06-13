@@ -47,12 +47,12 @@ export class CompletedComponent extends PagebaseService implements OnInit {
     this.loading=true;
      this.pp = '';
    this.parm= '{"paged":true,"page":0,"limit":10,"userId":11}';
-  /* if (this.productName !=''){this.pp += ',"productName":"' + this.productName + '"'}  
+  /* if (this.productName !=''){this.pp += ',"productName":"' + this.productName + '"'}
    if (this.startTime.toString() !=''){this.pp += ',"doneDateStart":"' + this.startTime + '"'}
    if (this.endTime.toString() !=''){this.pp += ',"doneDateEnd":' + this.endTime + '"'}
    if (this.type !=null && this.type.toString() !=''){this.pp += ',"type":' + this.type.toString()}
    if (this.approveStatus !=null && this.approveStatus.toString() !=''){this.pp += ',"approveStatus":' + this.approveStatus.toString()}
-    
+
     this.pp = this.paramheader + this.pp + this.paramfooter;*/
 
     if (this.productName=='')    {this.productName=null;}
@@ -67,7 +67,7 @@ export class CompletedComponent extends PagebaseService implements OnInit {
     {
     if (this.endTime.toString()=='')    {this.endTime=null;}
     }
-    
+
 
 let parameters = {
   paged: true,

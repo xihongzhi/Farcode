@@ -66,7 +66,7 @@
             <div class="row">
               <div class="col-md-12 text-right">
                 <div class="btn-group">
-            
+
                   <button id="btn_search" class="btn blue" (click)="btnSearch(null);">
                     查询
                     <i class="fa fa-search"></i>
@@ -103,11 +103,11 @@
                     <!-- <button id="btn_add_price" class="btn yellow" (click)="btnAddPrice();">
                       添加运价
                       <i class="fa fa-adjust"></i>
-                    </button>
-                    <button id="btn_updata" class="btn red">
+                    </button>-->
+                    <button id="btn_updata" class="btn yellow" (click)="btnSub();">
                       提交审批
                       <i class="fa fa-arrow-circle-up"></i>
-                    </button> -->
+                    </button>
                   </div>
                 </div>
               </div>
@@ -149,8 +149,8 @@
                     <td><input type="checkbox" name="" [(ngModel)]="item.checkStatus" [(checked)]="selectAll" />
                     </td>
                     <td>{{item.id}}</td>
-                    <td>{{item.num}}</td>
-                    <td>{{item.name}}</td>
+                    <td> <a (click)="urleNavigate(item.id)">{{item.num}}</a></td>
+                    <td> <a (click)="urleNavigate(item.id)">{{item.name}}</a></td>
                     <td>{{item.type}}</td>
                     <td>{{convertDate(item.validDate)}}</td>
                     <td>{{convertDate(item.invalidDate)}}</td>
