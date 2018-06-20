@@ -81,7 +81,7 @@ export class AddonpriceComponent extends PagebaseService implements OnInit {
       parameters.page = event.PageIndex;
       parameters.pageSize = event.PageSize;
     }
-  let parm = { "page": 1, "pageSize": 5, "req": { "carrier": "3U", "tariff": "008", 
+  let parm = { "page": 1, "pageSize": 5, "req": { "carrier": "3U", "tariff": "008",
   "fcl": "Q", "owrt": "2", "orig": ["CTU"], "dest": ["HAK", "HFE"], "rtg": ["0040"],
    "ftnt": ["3Q"] } };
    debugger;
@@ -139,7 +139,18 @@ export class AddonpriceComponent extends PagebaseService implements OnInit {
         if (item.status == true) {
           item.del = 1;
           item.status = false;
-          this.priceList.push(item);
+          this.priceList.forEach(items=>{
+            if(items.id===item.id && items.cxr===item.cxr && items.nation1===item.nation1 && items.nation2===item.nation2
+              && items.location1===item.location1 && items.location2===item.location2
+            && items.tariff===item.tariff && items.fcl===item.fcl && items.owrt===item.owrt
+            && items.rtg===item.rtg && items.fn===item.fn &&
+            items.zone===item.zone &&  items.currency===item.currency && items.price===item.price
+             && items.effDate===item.effDate
+          ){
+              items.del = 1;
+            }
+          })
+         // this.priceList.push(item);
         }
       });
     }
@@ -152,8 +163,8 @@ export class AddonpriceComponent extends PagebaseService implements OnInit {
         cxr: "",
         nation1: "",
         nation2: "",
-        location1: "",    
-        location2: "",     
+        location1: "",
+        location2: "",
         tariff: "008",
         fcl: "",
         owrt: 1,
@@ -173,7 +184,7 @@ export class AddonpriceComponent extends PagebaseService implements OnInit {
   btnSubmit() {
 
     let reg1 = new RegExp('^[A-Z]{3}$');
-    let reg2 = new RegExp('^[0-9]{4}$');    
+    let reg2 = new RegExp('^[0-9]{4}$');
     let reg3 = new RegExp('^[A-Z0-9]{2}$');
     let reg4 = new RegExp('^[0-9]*$');
     let reg5 = new RegExp('^[a-zA-Z]{1,2}$');
@@ -181,56 +192,56 @@ export class AddonpriceComponent extends PagebaseService implements OnInit {
       if (item.module == 1) {
         if (item.location1) {
           if (!reg1.test(item.location1.toUpperCase())) {
-            this._elem.tip(`始发必须为三字符`);  
+            this._elem.tip(`始发必须为三字符`);
             return;
-          } 
+          }
           item.location1=item.location1.toUpperCase()
         }
         if (item.location2) {
           if (!reg1.test(item.location2.toUpperCase())) {
-            this._elem.tip(`到达必须为三字符`);  
+            this._elem.tip(`到达必须为三字符`);
             return;
           } //3个字母
           item.location2=item.location2.toUpperCase();
         }
         if (item.fcl) {
           if(item.fcl.length>8){
-            this._elem.tip(`Fare Class的长度不能大于8`);  
+            this._elem.tip(`Fare Class的长度不能大于8`);
             return;
           }
           //最长8位
         }
         if (item.rtg) {
           if (!reg2.test(item.rtg)) {
-            this._elem.tip(`Routing必须为四位数字`);  
+            this._elem.tip(`Routing必须为四位数字`);
             return;
-          } 
+          }
           //四位数字
         }
         if (item.fn) {
           //两位字母和数字得组合
           if (!reg3.test(item.fn.toUpperCase())) {
-            this._elem.tip(`Footnote必须为1-2两位字符`);  
+            this._elem.tip(`Footnote必须为1-2两位字符`);
             return;
-          } 
+          }
           item.fn=item.fn.toUpperCase();
         }
 
 
         if (item.currency) {
           if (!reg1.test(item.currency.toUpperCase())) {
-            this._elem.tip(`货币必须为三字符`);  
+            this._elem.tip(`货币必须为三字符`);
             return;
-          } 
+          }
           item.currency=item.currency.toUpperCase();
           //三位字母
         }
         if (item.price) {
           //数字
           if (!reg4.test(item.price)) {
-            this._elem.tip(`价格必须为数字`);  
+            this._elem.tip(`价格必须为数字`);
             return;
-          } 
+          }
         }
         item.module = 0;
         item.id = "新增";

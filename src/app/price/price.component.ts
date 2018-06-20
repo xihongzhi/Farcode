@@ -150,7 +150,15 @@ export class PriceComponent extends PagebaseService implements OnInit {
           debugger;
           item.del = 1;
           item.status = false;
-          this.priceList.push(item);
+          this.priceList.forEach(items=>{
+            if(items.id===item.id && items.orig===item.orig && items.dest===item.dest && items.rule===item.rule
+            && items.tariff===item.tariff && items.fcl===item.fcl && items.owrt===item.owrt && items.rtg===item.rtg &&
+            items.ftnt===item.ftnt &&  items.currency===item.currency && items.price===item.price && items.effDate===item.effDate
+          ){
+              items.del = 1;
+            }
+          })
+          // this.priceList.push(item);
         }
       });
     }
@@ -182,7 +190,7 @@ export class PriceComponent extends PagebaseService implements OnInit {
   //保存参数
   btnSubmit() {
     let reg1 = new RegExp('^[A-Z]{3}$');
-    let reg2 = new RegExp('^[0-9]{4}$');    
+    let reg2 = new RegExp('^[0-9]{4}$');
     let reg3 = new RegExp('^[A-Z0-9]{1,2}$');
     let reg4 = new RegExp('^[0-9]*$');
     this.response.forEach(item => {
@@ -190,56 +198,56 @@ export class PriceComponent extends PagebaseService implements OnInit {
         debugger;
         if (item.orig) {
           if (!reg1.test(item.orig.toUpperCase())) {
-            this._elem.tip(`始发必须为三字符`);  
+            this._elem.tip(`始发必须为三字符`);
             return;
-          } 
+          }
           item.orig=item.orig.toUpperCase();
         }
         if (item.dest) {
           if (!reg1.test(item.dest.toUpperCase())) {
-            this._elem.tip(`到达必须为三字符`);  
+            this._elem.tip(`到达必须为三字符`);
             return;
           } //3个字母
           item.dest=item.dest.toUpperCase();
         }
         if (item.fcl) {
           if(item.fcl.length>8){
-            this._elem.tip(`Fare Class的长度不能大于8`);  
+            this._elem.tip(`Fare Class的长度不能大于8`);
             return;
           }
           //最长8位
         }
         if (item.rtg) {
           if (!reg2.test(item.rtg)) {
-            this._elem.tip(`Routing必须为四位数字`);  
+            this._elem.tip(`Routing必须为四位数字`);
             return;
-          } 
+          }
           //四位数字
         }
         debugger;
         if (item.ftnt) {
           //两位字母和数字得组合
           if (!reg3.test(item.ftnt.toUpperCase())) {
-            this._elem.tip(`Footnote必须为两位字符`);  
+            this._elem.tip(`Footnote必须为两位字符`);
             return;
-          } 
+          }
           item.ftnt=item.ftnt.toUpperCase();
         }
 
         if (item.currency) {
           if (!reg1.test(item.currency.toUpperCase())) {
-            this._elem.tip(`货币必须为三字符`);  
+            this._elem.tip(`货币必须为三字符`);
             return;
-          } 
+          }
           item.currency=item.currency.toUpperCase();
           //三位字母
         }
         if (item.price) {
           //数字
           if (!reg4.test(item.price)) {
-            this._elem.tip(`价格必须为数字`);  
+            this._elem.tip(`价格必须为数字`);
             return;
-          } 
+          }
         }
         item.module = 0;
         item.id = "新增";
