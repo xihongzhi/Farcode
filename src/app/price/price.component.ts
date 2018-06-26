@@ -103,6 +103,7 @@ export class PriceComponent extends PagebaseService implements OnInit {
       if (data.code == "0") {
         data.data.response.forEach(element => {
           element.price = this._util.accDiv(element.price, 100);
+          element.source=1;//查询出来得数据
         });
         this.response = data.data.response;
         this._pageIndex = data.data.pageNum;
@@ -147,18 +148,20 @@ export class PriceComponent extends PagebaseService implements OnInit {
     if (newObj) {
       this.response.forEach(item => {
         if (item.status == true) {
-          debugger;
           item.del = 1;
           item.status = false;
-          this.priceList.forEach(items=>{
-            if(items.id===item.id && items.orig===item.orig && items.dest===item.dest && items.rule===item.rule
-            && items.tariff===item.tariff && items.fcl===item.fcl && items.owrt===item.owrt && items.rtg===item.rtg &&
-            items.ftnt===item.ftnt &&  items.currency===item.currency && items.price===item.price && items.effDate===item.effDate
-          ){
-              items.del = 1;
-            }
-          })
-          // this.priceList.push(item);
+          if(item.source==1){
+            this.priceList.push(item);
+          }else{
+            this.priceList.forEach(items=>{
+              if(items.id===item.id && items.orig===item.orig && items.dest===item.dest && items.rule===item.rule
+              && items.tariff===item.tariff && items.fcl===item.fcl && items.owrt===item.owrt && items.rtg===item.rtg &&
+              items.ftnt===item.ftnt &&  items.currency===item.currency && items.price===item.price && items.effDate===item.effDate
+            ){
+                items.del = 1;
+              }
+            })
+          }
         }
       });
     }
