@@ -264,7 +264,7 @@ export class AddonpriceComponent extends PagebaseService implements OnInit {
   //提交审批
   btnSub(): void {
     let hears=['Rec Type','CXR','Tariff Num','Action Code','Orig City','Dest City','Fare Class','OW/RT','RTG','FN','CUR','Fare Amount','chg RTG','chg FN','chg CUR','Eff Date'];
-    let columns=['type','cxr','tariff','actioncode','nation1','nation2','fcl','owrt','rtg','fn','currency','price','chg RTG','chg FN','chg CUR','Eff Date'];
+    let columns=['type','cxr','tariff','actioncode','location1','location2','fcl','owrt','rtg','fn','currency','price','chg RTG','chg FN','chg CUR','Eff Date'];
     this.priceList.forEach(item=>{
       item.type='A';
       item.price=this._util.accMul(item.price, 100);

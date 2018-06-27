@@ -288,14 +288,15 @@ export class PriceComponent extends PagebaseService implements OnInit {
   //提交审批
   btnSub(): void {
     let hears = ['Rec Type', 'CXR', 'Tariff Num', 'Action Code', 'Orig City', 'Dest City', 'Fare Class', 'OW/RT', 'RTG', 'FN', 'CUR', 'Fare Amount', 'chg RTG', 'chg FN', 'chg CUR', 'Eff Date'];
-    let columns = ['type', 'cxr', 'tariff', 'actioncode', 'origCountry', 'destCountry', 'fcl', 'owrt', 'rtg', 'fn', 'currency', 'price', 'chg RTG', 'chg FN', 'chg CUR', 'Eff Date'];
+    let columns = ['type', 'cxr', 'tariff', 'actioncode', 'orig', 'dest', 'fcl', 'owrt', 'rtg', 'ftnt', 'currency', 'price', 'chg RTG', 'chg FN', 'chg CUR', 'Eff Date'];
     this.priceList.forEach(item => {
+      debugger;
       item.type = 'F';
       item.price = this._util.accMul(item.price, 100);
       item.actioncode = item.del == 1 ? 'X' : 'N';
     });
 
-    this._export.exportCSV(this.priceList, hears, columns, "ADDON查询");
+    this._export.exportCSV(this.priceList, hears, columns, "直达运价查询");
 
     this.priceList = [];
     $("#t2").removeClass("active");
